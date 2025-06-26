@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 import random
+import base64
 from streamlit_option_menu import option_menu
 
 st.set_page_config(page_title="TimerBreeze 🍃", layout="wide")
@@ -22,36 +23,18 @@ quotes = [
     "🧠 Mimpi besar dimulai dari fokus kecil"
 ]
 
-# Background Custom
-bg_choice = st.sidebar.selectbox("🎨 Pilih Background", [
-    "Default (Putih)", "Langit Senja", "Pantai", "Coding Vibes", "Upload Gambar Sendiri"
-])
+# Background langsung pakai default (Langit Senja)
+bg_url = "https://images.unsplash.com/photo-1506744038136-46273834b3fb"
 
-if bg_choice == "Langit Senja":
-    bg_url = "https://i.ibb.co/z6f3m5g/sunset-sky.jpg"
-elif bg_choice == "Pantai":
-    bg_url = "https://i.ibb.co/W2zjMDR/beach.jpg"
-elif bg_choice == "Coding Vibes":
-    bg_url = "https://i.ibb.co/fCqHmhg/code.jpg"
-elif bg_choice == "Upload Gambar Sendiri":
-    bg_file = st.sidebar.file_uploader("Upload Background", type=["jpg", "jpeg", "png"])
-    if bg_file:
-        bg_url = f"data:image/png;base64,{base64.b64encode(bg_file.read()).decode()}"
-    else:
-        bg_url = ""
-else:
-    bg_url = ""
-
-if bg_url:
-    st.markdown(f"""
-        <style>
-        .stApp {{
-            background-image: url('{bg_url}');
-            background-size: cover;
-            background-attachment: fixed;
-        }}
-        </style>
-    """, unsafe_allow_html=True)
+st.markdown(f"""
+    <style>
+    .stApp {{
+        background-image: url('{bg_url}');
+        background-size: cover;
+        background-attachment: fixed;
+    }}
+    </style>
+""", unsafe_allow_html=True)
 
 # Navigasi
 selected = option_menu(None, ["🕒 Timer", "📝 To-Do", "🎵 Musik"],
@@ -119,3 +102,4 @@ elif selected == "🎵 Musik":
     st.markdown("---")
     st.subheader("💡 Catatan:")
     st.info("Kontrol Spotify & YouTube masih dalam pengembangan. Untuk sekarang, upload dan putar musik langsung dari file.")
+
